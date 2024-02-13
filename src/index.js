@@ -31,27 +31,30 @@ const typeDefs = gql`
     author: String!
   }
   type Mutation {
-    newNote(content: String!): Note!
+    newNote(content: "This is a note in our database!") {
+      content
+      author
+      id
+    }
   }
 `;
 // Предстваляем функцию разрешения для полей схемы
 const resolvers = {
   Query: {
     hello: () => 'Hello world!!!',
-    notes: () => notes,
+    notes: async () => {
+      return await models.Note.find();
+    },
     note: (parent, args) => {
       return notes.find((note) => note.id === args.id);
     }
   },
   Mutation: {
-    newNote: (parent, args) => {
-      let noteValue = {
-        id: String(notes.length + 1),
+    newNote: async (parent, args) => {
+      return await models.Note.create({
         content: args.content,
         author: 'Adam Scott'
-      };
-      notes.push(noteValue);
-      return noteValue;
+      });
     }
   }
 };
