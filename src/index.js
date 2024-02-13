@@ -1,6 +1,5 @@
 // index.js
 // This is the main entry point of our application
-//Проверка Git
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 require('dotenv').config();
