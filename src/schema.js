@@ -3,7 +3,6 @@ const { gql } = require('apollo-server-express');
 //Построение схемы с использованием языка схем GraphQL
 module.exports = gql`
   type Query {
-    hello: String!
     notes: [Note!]!
     note(id: ID!): Note!
   }
@@ -14,5 +13,7 @@ module.exports = gql`
   }
   type Mutation {
     newNote(content: String!): Note!
+    updateNote(id: ID!, content: String!): Note!
+    deleteNote(id: ID!): Boolean!
   }
 `;
