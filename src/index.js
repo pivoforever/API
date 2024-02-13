@@ -31,11 +31,7 @@ const typeDefs = gql`
     author: String!
   }
   type Mutation {
-    newNote(content: "This is a note in our database!") {
-      content
-      author
-      id
-    }
+    newNote(content: String!): Note!
   }
 `;
 // Предстваляем функцию разрешения для полей схемы
@@ -45,8 +41,8 @@ const resolvers = {
     notes: async () => {
       return await models.Note.find();
     },
-    note: (parent, args) => {
-      return notes.find((note) => note.id === args.id);
+    note: async (parent, args) => {
+      return await models.Note.findById(args.id);
     }
   },
   Mutation: {
